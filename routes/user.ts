@@ -6,6 +6,39 @@ const userRoutes  = Router();
 
 
 
+//Login
+userRoutes.post('/login', (req: Request, res: Response)=>{
+    
+    const body  = req.body;
+
+    User.findOne({email: body.email},( err , userDB ) => {
+
+        if ( err ) throw err;
+
+        if ( !userDB ) {
+            return res.json({
+                ok:false,
+                message: 'Incorrect User/password'
+            });
+        }
+
+        if (userDB.checkPassword(body.password)){
+            res.json({
+                ok:true,
+                token: 'adasdasdasd'
+            });
+        } else {
+            return res.json({
+                ok:false,
+                message: 'Incorrect User/password ***'
+            });
+        }
+
+    });
+
+});
+
+//Create
 userRoutes.post('/create', (req: Request, res: Response) => {
 
     const user = {
