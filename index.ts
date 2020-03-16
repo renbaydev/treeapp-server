@@ -1,9 +1,13 @@
 import Server from './classes/server';
 import userRoutes from './routes/user';
 import moongoose from 'mongoose';
+import bodyParser from 'body-parser';
 
 const server = new Server;
 
+// Body PArser
+server.app.use(bodyParser.urlencoded({ extended:true }));
+server.app.use(bodyParser.json());
 
 //Rutas de mi aplicacion
 server.app.use('/user', userRoutes );
