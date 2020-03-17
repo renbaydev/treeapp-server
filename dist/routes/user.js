@@ -7,6 +7,7 @@ const express_1 = require("express");
 const user_model_1 = require("../models/user.model");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const token_1 = __importDefault(require("../classes/token"));
+const auth_1 = require("../middlewares/auth");
 const userRoutes = express_1.Router();
 //Login
 userRoutes.post('/login', (req, res) => {
@@ -63,6 +64,34 @@ userRoutes.post('/create', (req, res) => {
         res.json({
             ok: false,
             err
+        });
+    });
+});
+//Update
+userRoutes.post('/update', auth_1.verifyToken, (req, res) => {
+    const user = {
+        name: req.body.name || req.user.name,
+        email: req.body.email || req.user.email,
+        avatar: req.body.avatar || req.user.avatar,
+    };
+    user_model_1.User.findByIdAndUpdate(req.user._id, user, { new: true }, (err, userDB) => {
+        if (err)
+            throw err;
+        if (!userDB) {
+            return res.json({
+                ok: false,
+                message: 'User not exists'
+            });
+        }
+        const userToken = token_1.default.getJwtToken({
+            _id: userDB._id,
+            name: userDB.name,
+            email: userDB.email,
+            avatar: userDB.avatar
+        });
+        res.json({
+            ok: true,
+            token: userToken
         });
     });
 });
