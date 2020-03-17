@@ -8,13 +8,14 @@ const user_1 = __importDefault(require("./routes/user"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const tree_routes_1 = __importDefault(require("./routes/tree.routes"));
+const location_routes_1 = __importDefault(require("./routes/location.routes"));
 const server = new server_1.default;
 // Body PArser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 //Rutas de mi aplicacion
 server.app.use('/user', user_1.default);
-// server.app.use('/test', testRoutes );
+server.app.use('/locations', location_routes_1.default);
 server.app.use('/trees', tree_routes_1.default);
 //Conectar DB
 mongoose_1.default.connect('mongodb://localhost:27017/treapp', {

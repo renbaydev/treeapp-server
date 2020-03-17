@@ -17,6 +17,11 @@ const treeSchema = new Schema({
     img:[{
         type: String
     }],
+    location: {
+        type: Schema.Types.ObjectId,
+        ref: 'Location',
+        required: [true, 'Location ref is must']
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
