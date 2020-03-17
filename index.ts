@@ -1,5 +1,6 @@
 import Server from './classes/server';
 import userRoutes from './routes/user';
+import testRoutes from './routes/test.routes';
 import moongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
@@ -11,6 +12,7 @@ server.app.use(bodyParser.json());
 
 //Rutas de mi aplicacion
 server.app.use('/user', userRoutes );
+server.app.use('/test', testRoutes );
 
 //Conectar DB
 moongoose.connect('mongodb://localhost:27017/treapp',
