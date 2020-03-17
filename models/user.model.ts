@@ -18,14 +18,15 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required']
+    },
+    role: {
+        type: Number,
+        default: 1
     }
 });
 
 userSchema.method('checkPassword', function( password: string = ''):boolean {
 
-
-    console.log(password);
-    console.log(this.password);
     if (bcrypt.compareSync( password, this.password )){
         return true;
     } else{
@@ -39,6 +40,7 @@ interface IUser extends Document {
     avatar: string;
     email:string;
     password: string;
+    role: number;
 
     checkPassword( password: string): boolean;
 }

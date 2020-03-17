@@ -1,10 +1,10 @@
 import { Router, Request, Response } from "express";
 import { verifyToken } from '../middlewares/auth';
-import { isAdmin } from '../middlewares/role';
+import { verifyAdmin } from '../middlewares/role';
 
 const testRoutes  = Router();
 
-testRoutes.get('/onlyForAdmin',[verifyToken, isAdmin], (req: Request, res: Response)=>{
+testRoutes.get('/onlyForAdmin',[verifyToken, verifyAdmin], (req: Request, res: Response)=>{
     
     return res.json({
         ok:true,
