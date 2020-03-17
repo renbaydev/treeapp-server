@@ -6,8 +6,7 @@ export const verifyToken = ( req: any, res: Response, next: NextFunction ) => {
     const userToken = req.get('x-token') || '';
 
     Token.checkToken( userToken )
-        .then( (decoded:any) => {
-            console.log('Decode', decoded);
+        .then( (decoded:any) => {            
             req.user = decoded.user;
             next();
         })
